@@ -1,4 +1,4 @@
-package webfunge
+package webfunge.core
 
 // TODO: enum classes are not supported in JavaScript yet
 class Direction(val name: String, val dx: Int, val dy: Int) {

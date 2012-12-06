@@ -1,4 +1,4 @@
-package webfunge
+package webfunge.core
 
 class Interpreter(val console: UserConsole) {
 

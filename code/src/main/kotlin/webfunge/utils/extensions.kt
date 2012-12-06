@@ -1,4 +1,4 @@
-package webfunge
+package webfunge.utils
 
 val String.indices: IntRange
     get() = 0..this.length-1

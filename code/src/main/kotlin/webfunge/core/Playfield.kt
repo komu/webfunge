@@ -1,6 +1,7 @@
-package webfunge
+package webfunge.core
 
 import java.util.StringBuilder
+import webfunge.utils.indices
 
 class Playfield {
 

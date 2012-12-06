@@ -1,12 +1,13 @@
-package webfunge
+package webfunge.ui
 
 import js.dom.html.HTMLButtonElement
 import js.dom.html.HTMLElement
 import js.dom.html.HTMLTextAreaElement
 import js.dom.html.window
+import webfunge.core.Interpreter
 
 class WebfungeSystem(val textArea: HTMLTextAreaElement,
-                     val console: UserConsole,
+                     val console: TextAreaUserConsole,
                      val overViewArea: HTMLElement,
                      val buttonsArea: HTMLElement) {
 
@@ -59,12 +60,50 @@ class WebfungeSystem(val textArea: HTMLTextAreaElement,
     }
 }
 
-fun initialize(programAreaId: String, outputAreaId: String, overviewAreaId: String, buttonsAreaId: String): WebfungeSystem {
-    val textArea = window.document.getElementById(programAreaId) as HTMLTextAreaElement
+fun initialize(root: HTMLElement): WebfungeSystem {
+    val doc = window.document
 
-    val console = UserConsole(outputAreaId)
-    val overviewArea = window.document.getElementById(overviewAreaId) as HTMLElement
-    val buttonsArea = window.document.getElementById(buttonsAreaId) as HTMLElement
+    val overviewArea = doc.createElement("div") as HTMLElement
+    root.appendChild(overviewArea)
 
-    return WebfungeSystem(textArea, console, overviewArea, buttonsArea)
+    val textArea = createProgramArea()
+
+    //val overviewArea = doc.getElementById("overview") as HTMLElement
+    val buttonsArea = doc.createElement("div") as HTMLElement
+    val consoleArea = createConsoleArea()
+
+    root.appendChild(textArea)
+    root.appendChild(buttonsArea)
+    root.appendChild(consoleArea)
+
+    return WebfungeSystem(textArea, TextAreaUserConsole(consoleArea), overviewArea, buttonsArea)
+}
+
+fun createConsoleArea(): HTMLTextAreaElement {
+    val area = window.document.createElement("textarea") as HTMLTextAreaElement
+    area.rows = 10.toDouble()
+    area.cols = 80.toDouble()
+    area.readOnly = true
+    return area
+}
+
+fun createProgramArea(): HTMLTextAreaElement {
+    val example = """  9::*\2*+00p0v"."0<
+>310p0","     >"llaw eht no "v  >#v_ ^
+^_210p0"--:"                 v  ,
+ :    v     " of beer"       <  :
+ -                >"selttob"00g.^ <     <
+ 1         >00g1-#^_$" elttob erom enO" ^
+      >00g#^_$" selttob erom oN"        ^
+ ^_110p0",dnuora ti ssap ,nwod eno ekaT"^
+  ^:-1_010p00g1-00pvv:-1g01_@#g00,*25<
+      ^             <
+
+    """
+
+    val area = window.document.createElement("textarea") as HTMLTextAreaElement
+    area.rows = 25.toDouble()
+    area.cols = 80.toDouble()
+    area.value = example
+    return area
 }

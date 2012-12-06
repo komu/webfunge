@@ -1,6 +1,7 @@
-package webfunge
+package webfunge.core
 
 import java.util.ArrayList
+import webfunge.utils.toCharCode
 
 class Stack {
     private val stack = ArrayList<Int>()

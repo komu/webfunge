@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>webfunge</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <script src="code/lib/kotlinEcma3.js" type="text/javascript"></script>
+    <script src="out/production/code/code.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var webfunge = null;
+
+        window.onload = function() {
+            Number.prototype.toChar = function() { return String.fromCharCode(this) };
+            webfunge = Kotlin.modules.code.webfunge.initialize("program", "output", "overview", "buttons");
+        };
+    </script>
+</head>
+<body>
+
+<div id="overview">not running</div>
+<textarea id="program" rows="25" cols="80">
+  9::*\2*+00p0v"."0&lt;
+&gt;310p0","     &gt;"llaw eht no "v  &gt;#v_ ^
+^_210p0"--:"                 v  ,
+ :    v     " of beer"       &lt;  :
+ -                &gt;"selttob"00g.^ &lt;     &lt;
+ 1         &gt;00g1-#^_$" elttob erom enO" ^
+      &gt;00g#^_$" selttob erom oN"        ^
+ ^_110p0",dnuora ti ssap ,nwod eno ekaT"^
+  ^:-1_010p00g1-00pvv:-1g01_@#g00,*25&lt;
+      ^             &lt;
+</textarea>
+
+<div id="buttons"></div>
+<textarea id="output" rows="10" cols="80" readonly>
+</textarea>
+
+</body>
+</html>

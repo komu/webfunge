@@ -6,11 +6,12 @@ import js.dom.html.HTMLTextAreaElement
 import js.dom.html.window
 import webfunge.core.Interpreter
 
-class WebfungeSystem(val textArea: HTMLTextAreaElement,
-                     val console: TextAreaUserConsole,
-                     val overViewArea: HTMLElement,
-                     val buttonsArea: HTMLElement) {
+class WebfungeSystem(val root: HTMLElement) {
 
+    val overviewArea = window.document.createElement("div") as HTMLElement
+    val buttonsArea = window.document.createElement("div") as HTMLElement
+    val console = TextAreaUserConsole()
+    val textArea = createProgramArea()
     val interpreter = Interpreter(console)
     val stepButton = button("step") { step() }
     val step100Button = button("step 100") { step(100) }
@@ -19,6 +20,11 @@ class WebfungeSystem(val textArea: HTMLTextAreaElement,
     val clearButton = button("clear") { clear() };
 
     {
+        root.appendChild(overviewArea)
+        root.appendChild(textArea)
+        root.appendChild(buttonsArea)
+        root.appendChild(console.element)
+
         buttonsArea.appendChild(button("load") { load() })
         buttonsArea.appendChild(stepButton)
         buttonsArea.appendChild(step100Button)
@@ -56,36 +62,14 @@ class WebfungeSystem(val textArea: HTMLTextAreaElement,
         step1000Button.disabled = interpreter.finished
         step10000Button.disabled = interpreter.finished
         clearButton.disabled = console.isEmpty
-        overViewArea.textContent = "direction: ${interpreter.direction}, pos: ${interpreter.x}, ${interpreter.y}, stack size: ${interpreter.stack.size}, steps: ${interpreter.steps}"
+        overviewArea.textContent = "direction: ${interpreter.direction}, pos: ${interpreter.x}, ${interpreter.y}, stack size: ${interpreter.stack.size}, steps: ${interpreter.steps}"
     }
 }
 
-fun initialize(root: HTMLElement): WebfungeSystem {
-    val doc = window.document
-
-    val overviewArea = doc.createElement("div") as HTMLElement
-    root.appendChild(overviewArea)
-
-    val textArea = createProgramArea()
-
-    //val overviewArea = doc.getElementById("overview") as HTMLElement
-    val buttonsArea = doc.createElement("div") as HTMLElement
-    val consoleArea = createConsoleArea()
-
-    root.appendChild(textArea)
-    root.appendChild(buttonsArea)
-    root.appendChild(consoleArea)
-
-    return WebfungeSystem(textArea, TextAreaUserConsole(consoleArea), overviewArea, buttonsArea)
+fun initSystem(root: HTMLElement) {
+    WebfungeSystem(root)
 }
 
-fun createConsoleArea(): HTMLTextAreaElement {
-    val area = window.document.createElement("textarea") as HTMLTextAreaElement
-    area.rows = 10.toDouble()
-    area.cols = 80.toDouble()
-    area.readOnly = true
-    return area
-}
 
 fun createProgramArea(): HTMLTextAreaElement {
     val example = """  9::*\2*+00p0v"."0<

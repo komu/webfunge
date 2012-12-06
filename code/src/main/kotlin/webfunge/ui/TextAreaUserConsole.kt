@@ -2,16 +2,25 @@ package webfunge.ui
 
 import js.debug.console
 import js.dom.html.HTMLTextAreaElement
+import js.dom.html.window
 import webfunge.core.UserConsole
 
-class TextAreaUserConsole(val output: HTMLTextAreaElement) : UserConsole {
+class TextAreaUserConsole() : UserConsole {
+
+    val element = window.document.createElement("textarea") as HTMLTextAreaElement;
+
+    {
+        element.rows = 10.toDouble()
+        element.cols = 80.toDouble()
+        element.readOnly = true
+    }
 
     override fun writeChar(char: Int) {
-        output.value += char.toChar()
+        element.value += char.toChar()
     }
 
     override fun writeInt(num: Int) {
-        output.value += num
+        element.value += num
     }
 
     override fun readNumber(): Int = noImpl
@@ -19,11 +28,11 @@ class TextAreaUserConsole(val output: HTMLTextAreaElement) : UserConsole {
     override fun readChar(): Char = noImpl
 
     fun clear() {
-        output.value = ""
+        element.value = ""
     }
 
     val isEmpty: Boolean
-       get() = output.value == ""
+       get() = element.value == ""
 
     override fun log(message: Any?) {
         console.log(message)

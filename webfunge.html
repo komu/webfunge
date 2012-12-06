@@ -7,11 +7,9 @@
     <script src="code/lib/kotlinEcma3.js" type="text/javascript"></script>
     <script src="out/production/code/code.js" type="text/javascript"></script>
     <script type="text/javascript">
-        var webfunge = null;
-
         window.onload = function() {
             Number.prototype.toChar = function() { return String.fromCharCode(this) };
-            webfunge = Kotlin.modules.code.webfunge.ui.initialize(document.getElementById("root"));
+            Kotlin.modules.code.webfunge.ui.initSystem(document.getElementById("root"));
         };
     </script>
 </head>

@@ -17,13 +17,16 @@ class WebfungeSystem(val root: HTMLElement) {
     val step100Button = button("step 100") { step(100) }
     val step1000Button = button("step 1000") { step(1000) }
     val step10000Button = button("step 10000") { step(10000) }
-    val clearButton = button("clear") { clear() };
+    val clearButton = button("clear") { clear() }
+    val stackView = StackView(interpreter.stack)
 
+    ;
     {
         root.appendChild(overviewArea)
         root.appendChild(textArea)
         root.appendChild(buttonsArea)
         root.appendChild(console.element)
+        root.appendChild(stackView.element)
 
         buttonsArea.appendChild(button("load") { load() })
         buttonsArea.appendChild(stepButton)
@@ -62,6 +65,7 @@ class WebfungeSystem(val root: HTMLElement) {
         step1000Button.disabled = interpreter.finished
         step10000Button.disabled = interpreter.finished
         clearButton.disabled = console.isEmpty
+        stackView.update()
         overviewArea.textContent = "direction: ${interpreter.direction}, pos: ${interpreter.x}, ${interpreter.y}, stack size: ${interpreter.stack.size}, steps: ${interpreter.steps}"
     }
 }

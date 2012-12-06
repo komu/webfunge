@@ -14,6 +14,8 @@ class Stack {
         stack.add(char)
     }
 
+    fun iterator() = stack.iterator()
+
     fun clear() {
         stack.clear()
     }

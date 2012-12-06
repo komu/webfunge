@@ -1,3 +1,22 @@
 textarea {
     font-family: monospace;
 }
+
+table.stack {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    display: block;
+    overflow: scroll;
+    background: #ccc;
+}
+
+table.stack td {
+    padding-left: 0.5em;
+}
+
+table.stack td.number {
+    text-align: right;
+}

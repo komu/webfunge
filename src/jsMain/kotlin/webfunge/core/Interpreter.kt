@@ -1,15 +1,18 @@
 package webfunge.core
 
+import kotlin.random.Random
+
 class Interpreter(val console: UserConsole) {
 
     val playfield = Playfield()
     val stack = Stack()
     var x = 0
     var y = 0
-    var direction = Directions.RIGHT
+    var direction = Direction.RIGHT
     var stringMode = false
     var finished = true
     var steps = 0
+    private val random = Random.Default
 
     fun step(max: Int) {
         var steps = 0
@@ -47,13 +50,13 @@ class Interpreter(val console: UserConsole) {
                 '%'  -> { val a = stack.pop(); val b = stack.pop(); stack.push(b%a) }
                 '!'  -> stack.push(if (stack.pop() == 0) 1 else 0)
                 '`'  -> { val a = stack.pop(); val b = stack.pop(); stack.push(if (b > a) 1 else 0) }
-                '>'  -> direction = Directions.RIGHT
-                '<'  -> direction = Directions.LEFT
-                '^'  -> direction = Directions.UP
-                'v'  -> direction = Directions.DOWN
-                '?'  -> direction = Directions.random()
-                '_'  -> direction = if (stack.pop() == 0) Directions.RIGHT else Directions.LEFT
-                '|'  -> direction = if (stack.pop() == 0) Directions.DOWN else Directions.UP
+                '>'  -> direction = Direction.RIGHT
+                '<'  -> direction = Direction.LEFT
+                '^'  -> direction = Direction.UP
+                'v'  -> direction = Direction.DOWN
+                '?'  -> direction = random.nextDirection()
+                '_'  -> direction = if (stack.pop() == 0) Direction.RIGHT else Direction.LEFT
+                '|'  -> direction = if (stack.pop() == 0) Direction.DOWN else Direction.UP
                 '"'  -> stringMode = true
                 ':'  -> { val value = stack.pop(); stack.push(value); stack.push(value); }
                 '\\' -> { val a = stack.pop(); val b = stack.pop(); stack.push(a); stack.push(b) }
@@ -93,7 +96,7 @@ class Interpreter(val console: UserConsole) {
         x = 0
         y = 0
         steps = 0
-        direction = Directions.RIGHT
+        direction = Direction.RIGHT
         stringMode = false
         finished = false
     }

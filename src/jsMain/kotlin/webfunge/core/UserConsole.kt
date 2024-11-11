@@ -1,6 +1,6 @@
 package webfunge.core
 
-public trait UserConsole {
+interface UserConsole {
     fun writeChar(char: Int)
     fun writeInt(num: Int)
     fun readNumber(): Int

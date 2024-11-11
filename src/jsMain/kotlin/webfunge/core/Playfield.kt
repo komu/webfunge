@@ -1,17 +1,14 @@
 package webfunge.core
 
-import java.util.StringBuilder
-import webfunge.utils.indices
-
 class Playfield {
 
     val width = 80
     val height = 25
     private val state = Array<Char>(width * height) { ' ' }
 
-    fun get(x: Int, y: Int): Char = state[index(x,y)]
+    operator fun get(x: Int, y: Int): Char = state[index(x,y)]
 
-    fun set(x: Int, y: Int, char: Char) {
+    operator fun set(x: Int, y: Int, char: Char) {
         state[index(x,y)] = char
     }
 
@@ -38,11 +35,11 @@ class Playfield {
             state[i] = ' '
     }
 
-    fun toString(): String {
+    override fun toString(): String {
         val sb = StringBuilder()
 
-        for (y in 0..height-1) {
-            for (x in 0..width-1)
+        for (y in 0..<height) {
+            for (x in 0..<width)
                 sb.append(this[x,y])
             sb.append('\n')
         }

@@ -1,12 +1,12 @@
 package webfunge.ui
 
-import js.dom.html.HTMLButtonElement
-import js.dom.html.HTMLElement
-import js.dom.html.HTMLTextAreaElement
-import js.dom.html.window
+import kotlinx.browser.window
+import org.w3c.dom.HTMLButtonElement
+import org.w3c.dom.HTMLElement
+import org.w3c.dom.HTMLTextAreaElement
 import webfunge.core.Interpreter
 
-class WebfungeSystem(val root: HTMLElement) {
+class WebfungeSystem(root: HTMLElement) {
 
     val overviewArea = window.document.createElement("div") as HTMLElement
     val buttonsArea = window.document.createElement("div") as HTMLElement
@@ -20,8 +20,7 @@ class WebfungeSystem(val root: HTMLElement) {
     val clearButton = button("clear") { clear() }
     val stackView = StackView(interpreter.stack)
 
-    ;
-    {
+    init {
         root.appendChild(overviewArea)
         root.appendChild(textArea)
         root.appendChild(buttonsArea)
@@ -40,7 +39,7 @@ class WebfungeSystem(val root: HTMLElement) {
     fun button(text: String, func: () -> Unit): HTMLButtonElement {
         val button = window.document.createElement("button") as HTMLButtonElement
         button.textContent = text
-        button.onclick = func
+        button.onclick = { func() }
         return button
     }
 
@@ -70,11 +69,6 @@ class WebfungeSystem(val root: HTMLElement) {
     }
 }
 
-fun initSystem(root: HTMLElement) {
-    WebfungeSystem(root)
-}
-
-
 fun createProgramArea(): HTMLTextAreaElement {
     val example = """  9::*\2*+00p0v"."0<
 >310p0","     >"llaw eht no "v  >#v_ ^
@@ -90,8 +84,8 @@ fun createProgramArea(): HTMLTextAreaElement {
     """
 
     val area = window.document.createElement("textarea") as HTMLTextAreaElement
-    area.rows = 25.toDouble()
-    area.cols = 80.toDouble()
+    area.rows = 25
+    area.cols = 80
     area.value = example
     return area
 }

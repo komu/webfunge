@@ -1,17 +1,16 @@
 package webfunge.ui
 
-import js.debug.console
-import js.dom.html.HTMLTextAreaElement
-import js.dom.html.window
+import kotlinx.browser.window
+import org.w3c.dom.HTMLTextAreaElement
 import webfunge.core.UserConsole
 
 class TextAreaUserConsole() : UserConsole {
 
-    val element = window.document.createElement("textarea") as HTMLTextAreaElement;
+    val element = window.document.createElement("textarea") as HTMLTextAreaElement
 
-    {
-        element.rows = 10.toDouble()
-        element.cols = 80.toDouble()
+    init {
+        element.rows = 10
+        element.cols = 80
         element.readOnly = true
     }
 
@@ -23,9 +22,9 @@ class TextAreaUserConsole() : UserConsole {
         element.value += num
     }
 
-    override fun readNumber(): Int = noImpl
+    override fun readNumber(): Int = TODO()
 
-    override fun readChar(): Char = noImpl
+    override fun readChar(): Char = TODO()
 
     fun clear() {
         element.value = ""

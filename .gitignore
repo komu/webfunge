@@ -1,3 +1,6 @@
 *~
-.idea/workspace.xml
-out
+/.idea/
+/out
+/build/
+/.gradle/
+/kotlin-js-store/
